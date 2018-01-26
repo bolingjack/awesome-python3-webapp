@@ -1,5 +1,7 @@
 # coding=utf-8
 
+'ORM'
+
 __author__ = 'yuyingqi'
 __email__ = 'yuyingqijack@163.com'
 
