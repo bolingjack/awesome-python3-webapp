@@ -39,7 +39,7 @@ def post(path):
     return decorator
 
 
-def get_required_kw_args(fn):  # 获取必要参数
+def get_required_kw_args(fn):  # 获取必要关键字参数列表
     args = []
     params = inspect.signature(fn).parameters
     for name, param in params.items():
@@ -48,11 +48,11 @@ def get_required_kw_args(fn):  # 获取必要参数
     return tuple(args)
 
 
-def get_named_kw_args(fn):  # 获取关键字参数
+def get_named_kw_args(fn):  # 获取关键字参数列表
     args = []
     params = inspect.signature(fn).parameters
     for name, param in params.items():
-        if param.kind == inspect.Parameter.KEYWORD_ONLY
+        if param.kind == inspect.Parameter.KEYWORD_ONLY:
             args.append(name)
     return tuple(args)
 
@@ -60,7 +60,7 @@ def get_named_kw_args(fn):  # 获取关键字参数
 def has_named_kw_args(fn):  # 是否有关键字参数
     params = inspect.signature(fn).parameters
     for name, param in params.items():
-        if param.lind == inspect.Parameter.KEYWORD_ONLY:
+        if param.kind == inspect.Parameter.KEYWORD_ONLY:
             return True
 
 
@@ -106,8 +106,7 @@ class RequestHandler(object):
                 if ct.startswith('application/json'):
                     params = await request.json()
                     if not isinstance(params, dict):
-                        request
-                        web.HTTPBadRequest("Json body must be object. ")
+                        return web.HTTPBadRequest("Json body must be object. ")
                     kw = params
                 elif ct.startswith('application/x-www-form-urlencoded') or ct.startswith('multipart/form-data'):
                     params = await request.post()
@@ -134,7 +133,7 @@ class RequestHandler(object):
 
             for k, v in request.match_info.items():
                 if k in kw:
-                    logging.warn('Duplicate arg name in named arg and kw args: %s' % k)
+                    logging.warning('Duplicate arg name in named arg and kw args: %s' % k)
             if self._has_request_arg:
                 kw['request'] = request
             if self._required_kw_args:
