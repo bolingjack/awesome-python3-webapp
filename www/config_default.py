@@ -8,10 +8,10 @@ __version__ = 1.0
 
 configs = {
     'db': {
-        'host': '127.0.0.1',
+        'host': 'localhost',
         'port': 3306,
-        'user': 'www',
-        'password': 'www',
+        'user': 'aaa',
+        'password': 'aaa',
         'database': 'awesome'
     },
     'session': {

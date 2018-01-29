@@ -6,9 +6,9 @@ __author__ = 'yuyingqi'
 __email__ = 'yuyingqijack@163.com'
 
 import logging
-import asyncio
 import aiomysql
 
+__pool = {}
 
 def log(sql, args=()):
     logging.info('SQL:%s' % sql)
@@ -18,12 +18,13 @@ async def create_pool(loop, **kw):
     logging.info('create database connection pool...')
     global __pool
 
-    __pool = await aiomysql.create_pool()(
-        host=kw.get('host', 'yuyingqi-develop.cszis4r93tw8.rds.cn-north-1.amazonaws.com.cn'),
+    __pool = await aiomysql.create_pool(
+
+        host=kw.get('host', 'localhost'),
         port=kw.get('port', 3306),
         user=kw['user'],
         password=kw['password'],
-        database=kw['database'],
+        db=kw['db'],
         charset=kw.get('charset', 'utf8'),
         autocommit=kw.get('autocommit', True),
         maxsize=kw.get('maxsize', 10),
