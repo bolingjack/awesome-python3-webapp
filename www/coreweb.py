@@ -229,7 +229,6 @@ def add_route(app, fn):
 
 def add_routes(app, module_name):
     n = module_name.rfind('.')
-    print(n)
     if n == (-1):
         mod = __import__(module_name, globals(), locals())
     else:
