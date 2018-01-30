@@ -53,9 +53,9 @@ async def execute(sql, args, autocommit=True):  # 执行，参数为sql语句，
         if not autocommit:
             await conn.begin()
         try:
-            async with conn.cursor(aiomysql.DictCursor) as cur:
+            async with conn.cursor() as cur:
                 await cur.execute(sql.replace('?', '%s'), args)
-                affected = await cur.rowcount
+                affected = cur.rowcount
             if not autocommit:
                 await conn.commit()
         except BaseException as e:
@@ -69,7 +69,7 @@ def create_args_string(num):  # 创建参数占位字符串
     L = []
     for n in range(num):
         L.append('?')
-    return '? '.join(L)
+    return ', '.join(L)
 
 
 class Field(object):
