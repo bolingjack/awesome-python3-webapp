@@ -22,6 +22,7 @@ COOKIE_NAME = 'awesession'
 _COOKIE_KEY = configs.session.secret
 
 
+
 def check_admin(request):
     if request.__user__ is None or not request.__user__.admin:
         raise APIPermissionError()
