@@ -13,14 +13,13 @@ import markdown2
 from aiohttp import web
 
 from coreweb import get, post
-from apis import APIValueError, APIResourceNotFoundError, APIError, APIPermissionError
+from apis import APIValueError, APIResourceNotFoundError, APIError, APIPermissionError, Page
 
 from models import User, Comment, Blog, next_id
 from config import configs
 
 COOKIE_NAME = 'awesession'
 _COOKIE_KEY = configs.session.secret
-
 
 
 def check_admin(request):
@@ -146,6 +145,14 @@ async def signout(request):
     return r
 
 
+@get('/manage/blogs')
+def manage_blogs(*, page='1'):
+    return {
+        '__template__': 'manage_blogs.html',
+        'page_index': get_page_index(page)
+    }
+
+
 @get('/manage/blogs/create')
 def manage_create_blog():
     return {
@@ -183,6 +190,17 @@ async def api_register_user(*, email, name, passwd):
     r.content_type = 'application/json'
     r.body = json.dumps(user, ensure_ascii=False).encode('utf-8')
     return r
+
+
+@get('/api/blogs')
+async def api_blogs(*, page='1'):
+    page_index = get_page_index(page)
+    num = await Blog.findNumber('count(id)')
+    p = Page(num, page_index)
+    if num == 0:
+        return dict(page=p, blogs=())
+    blogs = await Blog.findAll(orderBy='created_at desc', limit=(p.offset, p.limit))
+    return dict(page=p, blogs=blogs)
 
 
 @get('/api/blogs/{id}')
