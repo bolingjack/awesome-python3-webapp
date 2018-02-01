@@ -119,7 +119,7 @@ def datetime_filter(t):
 
 
 async def init(loop):
-    await orm.create_pool(loop=loop, host='',
+    await orm.create_pool(loop=loop, host='yuyingqi-develop.cszis4r93tw8.rds.cn-north-1.amazonaws.com.cn',
                           user='root', password='yuyingqi', port=3306, db='awesome')
     app = web.Application(loop=loop, middlewares=[
         logger_factory, response_factory
