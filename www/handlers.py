@@ -67,7 +67,7 @@ async def cookie2user(cookie_str):  # 通过cookie获取用户信息
         if user is None:
             return None
         s = '%s-%s-%s-%s' % (uid, user.passwd, expires, _COOKIE_KEY)
-        if sha1 != hashlib.sha1(s.encode('utf8').hexdigest()):
+        if sha1 != hashlib.sha1(s.encode('utf8')).hexdigest():
             logging.info('invalid sha1')
             return None
         user.passwd = '*******'
