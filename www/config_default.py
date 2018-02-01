@@ -10,9 +10,9 @@ configs = {
     'db': {
         'host': 'localhost',
         'port': 3306,
-        'user': 'aaa',
-        'password': 'aaa',
-        'database': 'awesome'
+        'user': 'root',
+        'password': 'yuyingqi',
+        'db': 'awesome'
     },
     'session': {
         'secret': 'awesome'

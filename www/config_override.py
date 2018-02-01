@@ -8,6 +8,6 @@ __version__ = 1.0
 
 configs = {
     'db': {
-        'host': '192.168.0.100'
+        'host': ''
     }
 }
